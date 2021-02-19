@@ -10,14 +10,14 @@
 		* @param ViewSettings $viewSettings
 		* @param Router $router
 		*/
-		public static function process(string $requestPath, Router $router, StaticFileHandler $staticFileHandler){
-			$serverData = $request->server;
+		public static function process(string $requestPath, string $requestType, Router $router, StaticFileHandler $staticFileHandler){
 			$clientIP = $_SERVER['REMOTE_ADDR'];
 			$requestType = $_SERVER['REQUEST_METHOD'];
 
 			if ($requestType === "GET"){
 
 				// Check for a static file
+
 				if ($staticFileHandler->doesStaticFileExist($requestPath)){
 					$mimeType = $staticFileHandler->getStaticFileMime($requestPath);
 					if ($mimeType === null){
@@ -30,7 +30,7 @@
 					*/
 					$cacheTime = $staticFileHandler->getCacheTimeForMime($mimeType);
 					if ($cacheTime !== null){
-						$response->header("cache-control", sprintf("max-age=%d", $cacheTime));
+						header(sprintf("cache-control: max-age=%d", $cacheTime));
 					}
 
 					header("content-type: $mimeType");

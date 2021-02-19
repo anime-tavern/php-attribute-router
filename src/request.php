@@ -31,10 +31,11 @@
 	$router = new Router;
 	$router->setControllersFolder(__DIR__ . "/../example/Controllers");
 	$router->loadMVCControllers($viewSettings);
-	$viewResult = $router->route($_SERVER['REQUEST_METHOD'], $requestPath);
+	$viewResult = RequestHandler::process($requestPath, $_SERVER['REQUEST_METHOD'], $router, $staticFileHandler);
 
 	if ($viewResult !== null){
 		print($viewResult);
 	}else{
-		print("404");
+		http_response_code(404);
+		print("");
 	}
