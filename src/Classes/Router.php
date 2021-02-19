@@ -80,7 +80,7 @@
 										foreach ($matches as $name=>$match){
 											if (is_string($name)){
 												if (isset($match[0])){
-													$request->get[$name] = $match[0];
+													$_GET[$name] = $match[0];
 												}
 											}
 										}
