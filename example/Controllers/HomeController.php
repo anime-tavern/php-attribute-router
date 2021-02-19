@@ -15,8 +15,6 @@
 		}
 
 		/**
-		* @param Swoole\Http\Request $request
-		* @param Swoole\Http\Response $response
 		* @return string
 		*/
 		#[Route("GET", "/")]
