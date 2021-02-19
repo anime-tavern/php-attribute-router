@@ -1,0 +1,3 @@
+RewriteEngine On
+RewriteCond %{REQUEST_URI} !/request.php
+RewriteRule ^(.*)$ /src/request.php?requestPath=$1 [L,QSA]
