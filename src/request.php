@@ -7,6 +7,9 @@
 	$requestPath = $_GET['requestPath'];
 	if (empty($requestPath)){
 		$requestPath = "/";
+	}else{
+		// Force it to begin with a forward slash
+		$requestPath = sprintf("/%s", $requestPath);
 	}
 
 	/**
