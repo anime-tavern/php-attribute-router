@@ -86,7 +86,7 @@
 										}
 
 										// Invoke the method (ReflectionMethod::invoke)
-										return $method->invoke($classInstance, $request, $response);
+										return $method->invoke($classInstance);
 									}
 								}
 							}
