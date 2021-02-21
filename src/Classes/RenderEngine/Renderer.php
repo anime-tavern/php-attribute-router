@@ -15,9 +15,14 @@
 			$this->viewSettings = $viewSettings;
 		}
 
-		public function getRenderedViewFile(){
+		/**
+		* Retrieves the rendered view file
+		* @param array $viewScope The scope that will be injected into the view
+		* @return string
+		*/
+		public function getRenderedViewFile(?array $viewScope){
 			$fileLocation = $this->fileLocation;
-			$parser = new Parser($fileLocation);
+			$parser = new Parser($fileLocation, $viewScope);
 			$parser->parse();
 
 			$layoutFileName = $parser->directives['@Layout'];

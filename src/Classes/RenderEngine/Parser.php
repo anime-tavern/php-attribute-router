@@ -9,7 +9,7 @@
 		private ?string $fileContents;
 		public array $directives = [];
 
-		public function __construct(string $fileLocation){
+		public function __construct(string $fileLocation, ?array $viewScope){
 			$this->fileLocation = $fileLocation;
 			// Include the file to parse its inner PHP code
 			$viewResult = "";
