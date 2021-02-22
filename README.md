@@ -37,3 +37,23 @@ public function homePostEcho(){
 Download the repository, and rename the `example` directory to something like `site`. Then, go to `src/request.php` and adjust the directories for your static files, views, and controllers to mimic the new directory name change from `example`.
 
 That's it!
+
+## Scope Variables
+
+When called the `getRenderedFile()` method of a RenderEngine/Renderer instance, you can pass an array as the first argument. To access this array in a view simply get the viewScope variable in the View file.
+
+```php
+<?php
+	$text = $viewScope['text'];
+?>
+@Layout = "Layout.php"
+@Head{
+	<title>Hello!</title>
+}
+@Body{
+	<h1><?= $text ?></h1>
+}
+```
+## Custom Attributes
+
+You can make your own attributes to decorate methods with. The router will call all attributes on a controller's method. Every attribute must be able to be instanced **and must** have a boolean property called `passed` that should be whether or not the attribute passed any desired checks - such as making sure a user is logged in.
