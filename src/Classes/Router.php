@@ -98,7 +98,6 @@
 									}
 								}
 							}
-							unset($routeAttribute);
 						}else{
 							$attrInstance = $attribute->newInstance();
 							if ($attrInstance->passed){
@@ -108,12 +107,11 @@
 								break 1;
 							}
 						}
-
-						// If we get here, then check that
-						// routing was possible
-						if ($attemptRouting){
-							return $method->invoke($classInstance);
-						}
+					}
+					// If we get here, then check that
+					// routing was possible
+					if ($attemptRouting){
+						return $method->invoke($classInstance);
 					}
 				}
 
