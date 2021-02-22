@@ -52,6 +52,13 @@
 					// Get the attributes (if any) of the method
 					$attributes = $method->getAttributes();
 
+					/**
+					* To be defined eventually...
+					*/
+					$routeClass = null;
+					$routeMethod = null;
+					$attemptRouting = false;
+
 					// Loop through any and all attributes
 					foreach ($attributes as $attribute){
 						$attrName = $attribute->getName();
@@ -68,9 +75,9 @@
 								if ($routeAttribute->isRegex === false){
 									// No, it is a plain string match
 									if ($routeAttribute->uri === $uri){
-
-										// Invoke the method (ReflectionMethod::invoke)
-										return $method->invoke($classInstance);
+										$attemptRouting = true;
+									}else{
+										$attemptRouting = false;
 									}
 								}else{
 									// Yes, it needs to be matched against the URI
@@ -85,16 +92,31 @@
 											}
 										}
 
-										// Invoke the method (ReflectionMethod::invoke)
-										return $method->invoke($classInstance);
+										$attemptRouting = true;
+									}else{
+										$attemptRouting = false;
 									}
 								}
 							}
-
 							unset($routeAttribute);
+						}else{
+							$attrInstance = $attribute->newInstance();
+							if ($attrInstance->passed){
+
+							}else{
+								$attemptRouting = false;
+								break 1;
+							}
+						}
+
+						// If we get here, then check that
+						// routing was possible
+						if ($attemptRouting){
+							return $method->invoke($classInstance);
 						}
 					}
 				}
+
 			}
 			return null;
 		}
