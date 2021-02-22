@@ -23,7 +23,7 @@
 
 			// Get the view file
 			$renderer = new RenderEngine\Renderer($this->viewSettings->getViewFilePath("home.php"), $this->viewSettings);
-			return $renderer->getRenderedViewFile();
+			return $renderer->getRenderedViewFile([]);
 		}
 
 	}
