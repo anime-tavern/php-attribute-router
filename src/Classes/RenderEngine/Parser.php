@@ -102,7 +102,6 @@
 							$tokenDelimiter = "}"; // What to expect
 							$buffer = "";
 						}elseif ($char === "="){
-							print("Dumping");
 							$prevParserState = "PARSE_DIRECTIVE_NAME";
 							$parseState = "PARSE_DIRECTIVE_SHORT_VALUE";
 							$directives[$buffer] = "";
