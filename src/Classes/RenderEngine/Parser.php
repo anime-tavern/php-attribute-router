@@ -35,6 +35,12 @@
 			$tokenDelimiter = "";
 			$buffer = "";
 
+			// How many { were hit during parsing the LONG_VALUE
+			// so it can be incremented and decremented
+			// so that hitting the first } won't always
+			// stop parsing the value
+			$tokenValueDelimiterDepth = 0;
+
 			while ( isset($contents[$index]) ){
 				$char = $contents[$index];
 				switch ($parseState){
@@ -52,11 +58,19 @@
 						break;
 					case "PARSE_DIRECTIVE_LONG_VALUE":
 						if ($char === $tokenDelimiter){
-							$prevParserState = "PARSE_DIRECTIVE_LONG_VALUE";
-							$parseState = "";
-							$tokenDelimiter = "";
-							$directives[$prevDirectiveName] = $buffer;
-							$buffer = "";
+							if ($tokenValueDelimiterDepth > 0){
+								--$tokenValueDelimiterDepth;
+								$buffer .= $char;
+							}else{
+								$prevParserState = "PARSE_DIRECTIVE_LONG_VALUE";
+								$parseState = "";
+								$tokenDelimiter = "";
+								$directives[$prevDirectiveName] = $buffer;
+								$buffer = "";
+							}
+						}elseif ($char === "{"){
+							++$tokenValueDelimiterDepth;
+							$buffer .= $char;
 						}else{
 							$buffer .= $char;
 						}
