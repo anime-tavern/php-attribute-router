@@ -41,6 +41,10 @@
 			// stop parsing the value
 			$tokenValueDelimiterDepth = 0;
 
+			// Whether or not the parser is parsing an "in quotes" value
+			$isInQuotes = false;
+			$inQuotesDelimiter = "";
+
 			while ( isset($contents[$index]) ){
 				$char = $contents[$index];
 				switch ($parseState){
@@ -62,14 +66,27 @@
 								--$tokenValueDelimiterDepth;
 								$buffer .= $char;
 							}else{
-								$prevParserState = "PARSE_DIRECTIVE_LONG_VALUE";
-								$parseState = "";
-								$tokenDelimiter = "";
-								$directives[$prevDirectiveName] = $buffer;
-								$buffer = "";
+								if ($isInQuotes){
+									$buffer .= $char;
+								}else{
+									$prevParserState = "PARSE_DIRECTIVE_LONG_VALUE";
+									$parseState = "";
+									$tokenDelimiter = "";
+									$directives[$prevDirectiveName] = $buffer;
+									$buffer = "";
+								}
 							}
 						}elseif ($char === "{"){
 							++$tokenValueDelimiterDepth;
+							$buffer .= $char;
+						}elseif ($char === "\"" || $char === ""){
+							if ($isInQuotes){
+								$isInQuotes = false;
+								$inQuotesDelimiter = "";
+							}else{
+								$isInQuotes = true;
+								$inQuotesDelimiter = $char;
+							}
 							$buffer .= $char;
 						}else{
 							$buffer .= $char;
