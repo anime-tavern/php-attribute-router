@@ -77,7 +77,12 @@
 								}
 							}
 						}elseif ($char === "{"){
-							++$tokenValueDelimiterDepth;
+							if ($isInQuotes){
+
+							}else{
+								++$tokenValueDelimiterDepth;
+							}
+
 							$buffer .= $char;
 						}elseif ($char === "\"" || $char === ""){
 							if ($isInQuotes){
