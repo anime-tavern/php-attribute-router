@@ -35,15 +35,15 @@
 				}
 
 				if (is_dir($controllerPath)){
-					return $this->loadMVCControllers($viewSettings, sprintf("%s/%s", $innerDirectory, $controllerFileName));
+					$this->loadMVCControllers($viewSettings, sprintf("%s/%s", $innerDirectory, $controllerFileName));
+				}else{
+					// The class name _must_ be the file name minus the extension
+					$className = pathinfo($controllerFileName, PATHINFO_FILENAME);
+					require($controllerPath);
+					$classReflector = new \ReflectionClass($className);
+					$controllerMethods = $classReflector->getMethods(ReflectionMethod::IS_PUBLIC);
+					$this->routableMethods[] = [new $className($viewSettings), $controllerMethods];
 				}
-
-				// The class name _must_ be the file name minus the extension
-				$className = pathinfo($controllerFileName, PATHINFO_FILENAME);
-				require($controllerPath);
-				$classReflector = new \ReflectionClass($className);
-				$controllerMethods = $classReflector->getMethods(ReflectionMethod::IS_PUBLIC);
-				$this->routableMethods[] = [new $className($viewSettings), $controllerMethods];
 			}
 		}
 
