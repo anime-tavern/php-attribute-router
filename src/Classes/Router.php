@@ -20,12 +20,23 @@
 		* Loads the MVC controller classes
 		* from the controllers folder
 		*/
-		public function loadMVCControllers(ViewSettings $viewSettings){
-			$fileNames = array_diff(scandir($this->controllersFolder), ['.','..']);
+		public function loadMVCControllers(ViewSettings $viewSettings, string $innerDirectory = ""){
+			if ($innerDirectory === ""){
+				$fileNames = array_diff(scandir($this->controllersFolder), ['.','..']);
+			}else{
+				$fileNames = array_diff(scandir(sprintf("%s/%s", $this->controllersFolder, $innerDirectory)), ['.','..']);
+			}
 
 			foreach ($fileNames as $controllerFileName){
-				// Ignore the base Controller
-				$controllerPath = sprintf("%s/%s", $this->controllersFolder, $controllerFileName);
+				if ($innerDirectory === ""){
+					$controllerPath = sprintf("%s/%s", $this->controllersFolder, $controllerFileName);
+				}else{
+					$controllerPath = sprintf("%s/%s/%s", $this->controllersFolder, $innerDirectory, $controllerFileName);
+				}
+
+				if (is_dir($controllerPath)){
+					return $this->loadMVCControllers($viewSettings, sprintf("%s/%s", $innerDirectory, $controllerFileName));
+				}
 
 				// The class name _must_ be the file name minus the extension
 				$className = pathinfo($controllerFileName, PATHINFO_FILENAME);
