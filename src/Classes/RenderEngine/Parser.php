@@ -100,24 +100,24 @@
 							$buffer .= $char;
 						}
 						break;
-						case "PARSE_DIRECTIVE_SHORT_VALUE_TOKEN":
-							if ($char === $tokenDelimiter){
-								$prevParserState = "PARSE_DIRECTIVE_SHORT_VALUE_TOKEN";
-								$parseState = "";
-								$buffer .= $char;
+					case "PARSE_DIRECTIVE_SHORT_VALUE_TOKEN":
+						if ($char === $tokenDelimiter){
+							$prevParserState = "PARSE_DIRECTIVE_SHORT_VALUE_TOKEN";
+							$parseState = "";
+							$buffer .= $char;
 
-								// Clear the delimiter from the start and end of the buffer
-								$buffer = trim($buffer, $tokenDelimiter);
+							// Clear the delimiter from the start and end of the buffer
+							$buffer = trim($buffer, $tokenDelimiter);
 
-								$directives[$prevDirectiveName] = $buffer;
-								$buffer = "";
-								$tokenDelimiter = "";
-							}elseif ($char === "\n"){
-								throw new Exception("Parse error. Unexpected EOL when parsing directive string value.");
-							}else{
-								$buffer .= $char;
-							}
-							break;
+							$directives[$prevDirectiveName] = $buffer;
+							$buffer = "";
+							$tokenDelimiter = "";
+						}elseif ($char === "\n"){
+							throw new Exception("Parse error. Unexpected EOL when parsing directive string value.");
+						}else{
+							$buffer .= $char;
+						}
+						break;
 					case "PARSE_DIRECTIVE_NAME";
 						if ($char === " "){
 							$prevParserState = "PARSE_DIRECTIVE_NAME";
