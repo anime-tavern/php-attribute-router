@@ -1,2 +1,5 @@
 <?php
-	class LayoutDoesNotExist extends Exception{}
+
+	namespace AttrRouter\RenderEngine;
+
+	class LayoutDoesNotExist extends \Exception{}

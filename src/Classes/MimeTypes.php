@@ -1,4 +1,7 @@
 <?php
+
+	namespace AttrRouter;
+
 	class MimeTypes{
 		const RECOGNIZED_EXTENSIONS = [
 			"css" => "text/css",

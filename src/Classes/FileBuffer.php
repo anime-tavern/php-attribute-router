@@ -1,4 +1,7 @@
 <?php
+
+	namespace AttrRouter;
+
 	class FileBuffer{
 
 		private $filePath = null;

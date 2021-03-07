@@ -1,4 +1,7 @@
 <?php
+
+	namespace AttrRouter;
+
 	class ViewSettings{
 		public $viewsFolder = "";
 		public $layoutsFolder = "";

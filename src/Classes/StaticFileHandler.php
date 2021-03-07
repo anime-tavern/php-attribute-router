@@ -1,4 +1,7 @@
 <?php
+
+	namespace AttrRouter;
+
 	require_once __DIR__ . "/MimeTypes.php";
 
 	class StaticFileHandler{

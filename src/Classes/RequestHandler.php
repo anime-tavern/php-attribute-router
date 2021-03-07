@@ -1,5 +1,7 @@
 <?php
 
+	namespace AttrRouter;
+
 	require_once __DIR__ . "/ViewSettings.php";
 	require_once __DIR__ . "/Router.php";
 

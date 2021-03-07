@@ -1,4 +1,6 @@
 <?php
+	namespace AttrRouter;
+
 	require_once __DIR__ . "/../Attributes/Route.php";
 
 	class Router{
@@ -41,7 +43,7 @@
 					$className = pathinfo($controllerFileName, PATHINFO_FILENAME);
 					require($controllerPath);
 					$classReflector = new \ReflectionClass($className);
-					$controllerMethods = $classReflector->getMethods(ReflectionMethod::IS_PUBLIC);
+					$controllerMethods = $classReflector->getMethods(\ReflectionMethod::IS_PUBLIC);
 					$this->routableMethods[] = [new $className($viewSettings), $controllerMethods];
 				}
 			}

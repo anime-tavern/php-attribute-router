@@ -1,5 +1,5 @@
 <?php
-	namespace RenderEngine;
+	namespace AttrRouter\RenderEngine;
 
 	class Parser{
 
