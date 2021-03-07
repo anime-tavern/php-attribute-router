@@ -16,3 +16,4 @@
 	require_once __DIR__ . "/src/Classes/RenderEngine/Renderer.php";
 	require_once __DIR__ . "/src/Classes/HttpHelpers/HttpRequest.php";
 	require_once __DIR__ . "/src/Classes/HttpHelpers/HttpResponse.php";
+	require_once __DIR__ . "/src/Classes/HttpHelpers/Redirect.php";
