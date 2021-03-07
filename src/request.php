@@ -33,9 +33,15 @@
 	$router->loadMVCControllers($viewSettings);
 	$viewResult = AttrRouter\RequestHandler::process($requestPath, $_SERVER['REQUEST_METHOD'], $router, $staticFileHandler);
 
-	if ($viewResult !== null){
+	// Is the view result a Redirect?
+	if ($viewResult instanceof \AttrRouter\HttpHelpers\Redirect){
+		http_response_code($viewResult->statusCode);
+		header(sprintf("location: %s", $viewResult->path));
+		exit();
+	}elseif ($viewResult !== null){
 		print($viewResult);
 	}else{
+		// TODO Check for registered 404 page
 		http_response_code(404);
-		print("");
+		exit();
 	}
