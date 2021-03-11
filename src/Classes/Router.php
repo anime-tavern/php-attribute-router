@@ -59,6 +59,12 @@
 				$classInstance = $methodData[0];
 				$methods = $methodData[1];
 
+				// The router will first find all methods
+				// that have a matching route.
+				// Then, later, it will verify any additional attributes
+				// also pass. Otherwise, no route is returned/invoked
+				$routeMethodsToAttempt = [];
+
 				// Loop through the methods
 				foreach($methods as $method){
 
@@ -72,7 +78,7 @@
 					$routeMethod = null;
 					$attemptRouting = false;
 
-					// Loop through any and all attributes
+					// Loop through attributes and only check the route here
 					foreach ($attributes as $attribute){
 						$attrName = $attribute->getName();
 
@@ -88,9 +94,7 @@
 								if ($routeAttribute->isRegex === false){
 									// No, it is a plain string match
 									if ($routeAttribute->uri === $uri){
-										$attemptRouting = true;
-									}else{
-										$attemptRouting = false;
+										$routeMethodsToAttempt[] = $method;
 									}
 								}else{
 									// Yes, it needs to be matched against the URI
@@ -105,26 +109,43 @@
 											}
 										}
 
-										$attemptRouting = true;
-									}else{
-										$attemptRouting = false;
+										$routeMethodsToAttempt[] = $method;
 									}
 								}
 							}
-						}else{
-							$attrInstance = $attribute->newInstance();
-							if ($attrInstance->passed){
-
-							}else{
-								$attemptRouting = false;
-								break 1;
-							}
 						}
 					}
-					// If we get here, then check that
-					// routing was possible
-					if ($attemptRouting){
-						return $method->invoke($classInstance);
+
+					// Loop through the methods that routes matched
+					// and run their additional attributes, if any.
+					// The first one to pass all should be invoked as the correct
+					// route.
+					$acceptedRoutes = [];
+					foreach ($routeMethodsToAttempt as $method){
+						$attributes = $method->getAttributes();
+
+						// Check everything except the route
+						$passedAttributes = 0;
+						$neededToRoute = count($attributes) - 1;
+
+						foreach ($attributes as $attribute){
+							$attrName = $attribute->getName();
+
+							if ($attrName !== "Route"){
+								$attrInstance = $attribute->newInstance();
+								if ($attrInstance->passed){
+									++$passedAttributes;
+								}else{
+									// This attribute failed. This method is not routable
+									// Move on to the next, break this inner for loop
+									break 1;
+								}
+							}
+						}
+
+						if ($passedAttributes === $neededToRoute){
+							return $method->invoke($classInstance);
+						}
 					}
 				}
 
