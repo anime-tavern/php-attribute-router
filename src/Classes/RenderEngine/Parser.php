@@ -153,6 +153,21 @@
 				++$index;
 			}
 
+			// Check if there is anything in the buffer
+			$trimmedBuffer = trim($buffer);
+			if ($trimmedBuffer !== ""){
+				// Check if the last directive is empty
+				$lastDirectiveValue = $directives[$prevDirectiveName];
+				if ($lastDirectiveValue === ""){
+					// The last directive is empty
+					// Add the current buffer to it after trimming a possible
+					// closing bracket from it "}"
+					$trimmedBuffer = rtrim($trimmedBuffer, "}");
+					$trimmedBuffer = trim($trimmedBuffer);
+					$directives[$prevDirectiveName] = $trimmedBuffer;
+				}
+			}
+
 			$this->directives = $directives;
 		}
 	}
