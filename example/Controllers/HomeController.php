@@ -1,16 +1,15 @@
 <?php
 
-	require_once __DIR__ . "/../../src/Classes/ViewSettings.php";
-	require_once __DIR__ . "/../../src/Classes/RenderEngine/Renderer.php";
+	require_once __DIR__ . "/../../loader.php";
 
 	class HomeController{
 
-		private ?ViewSettings $viewSettings;
+		private ?\AttrRouter\ViewSettings $viewSettings;
 
 		/**
-		* @param ViewSettings $viewSettings
+		* @param \AttrRouter\ViewSettings $viewSettings
 		*/
-		public function __construct(ViewSettings $viewSettings){
+		public function __construct(\AttrRouter\ViewSettings $viewSettings){
 			$this->viewSettings = $viewSettings;
 		}
 
@@ -18,11 +17,14 @@
 		* @return string
 		*/
 		#[Route("GET", "/")]
-		public function homePage(){
+		public function homePageView(){
 			header("content-type: text/html");
 
 			// Get the view file
-			$renderer = new RenderEngine\Renderer($this->viewSettings->getViewFilePath("home.php"), $this->viewSettings);
+			$renderer = new AttrRouter\RenderEngine\Renderer(
+				$this->viewSettings->getViewFilePath("home.php"),
+				$this->viewSettings
+			);
 			return $renderer->getRenderedViewFile([]);
 		}
 
