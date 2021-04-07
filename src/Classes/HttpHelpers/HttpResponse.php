@@ -22,7 +22,7 @@
 		* @param array $extraData (Optional) To encode and merge into the return JSON
 		* @return string
 		*/
-		public function getJsonError(string $errMessage, array $extraData = []){
+		public function getJsonError(string $errMessage, array $extraData = []): string{
 			return json_encode(array_merge(
 				["status"=>-1, "error"=>$errMessage],
 				$extraData,
@@ -36,7 +36,7 @@
 		* @param array $extraData (Optional) To encode and merge into the return JSON
 		* @return string
 		*/
-		public function getJsonSuccess(array $data = []){
+		public function getJsonSuccess(array $data = []): string{
 			return json_encode(array_merge(
 				["status"=>1],
 				$data,
@@ -49,7 +49,7 @@
 		* @param int $statusCode (optional)
 		* @return array
 		*/
-		public function redirect(string $path, int $statusCode = 302){
+		public function redirect(string $path, int $statusCode = 302): array{
 			return [
 				"path"=>$path,
 				"statusCode"=>$statusCode,

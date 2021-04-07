@@ -8,12 +8,19 @@
 	class HttpRequest{
 
 		/**
+		* Fetches the raw body of a request
+		*/
+		public function getRawBody(): string{
+			return file_get_contents("php://input");
+		}
+
+		/**
 		* Fetches a value from the POST payload. Safe-checks with isset
 		* @param string $name
 		* @param mixed $default Will return this if the POST[$name] is not set
 		* @return mixed
 		*/
-		public function getPostValue(string $name, mixed $default){
+		public function getPostValue(string $name, mixed $default): mixed{
 			if (isset($_POST[$name])){
 				return $_POST[$name];
 			}else{
@@ -27,7 +34,7 @@
 		* @param mixed $default Will return this if the GET[$name] is not set
 		* @return mixed
 		*/
-		public function getGetValue(string $name, mixed $default){
+		public function getGetValue(string $name, mixed $default): mixed{
 			if (isset($_GET[$name])){
 				return $_GET[$name];
 			}else{
@@ -41,7 +48,7 @@
 		* @param mixed $default Will return this if the GET[$name] is not set
 		* @return mixed
 		*/
-		public function getCookieValue(string $name, mixed $default){
+		public function getCookieValue(string $name, mixed $default): mixed{
 			if (isset($_COOKIE[$name])){
 				return $_COOKIE[$name];
 			}else{
@@ -96,7 +103,7 @@
 		* Attempts to fetch the IP of the originating request.
 		* @return string Can be blank for no IP
 		*/
-		public function getIP(){
+		public function getIP(): string{
 			if (!empty($_SERVER['HTTP_CLIENT_IP'])){
 				// IP is from shared internet
 				return $_SERVER['HTTP_CLIENT_IP'];
