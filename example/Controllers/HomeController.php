@@ -6,18 +6,12 @@
 
 		private ?\AttrRouter\ViewSettings $viewSettings;
 
-		/**
-		* @param \AttrRouter\ViewSettings $viewSettings
-		*/
 		public function __construct(\AttrRouter\ViewSettings $viewSettings){
 			$this->viewSettings = $viewSettings;
 		}
 
-		/**
-		* @return string
-		*/
 		#[Route("GET", "/")]
-		public function homePageView(){
+		public function homePageView(): string{
 			header("content-type: text/html");
 
 			// Get the view file
