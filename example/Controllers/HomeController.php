@@ -1,7 +1,4 @@
 <?php
-
-	require_once __DIR__ . "/../../loader.php";
-
 	class HomeController{
 
 		private ?\AttrRouter\ViewSettings $viewSettings;
