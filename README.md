@@ -1,3 +1,5 @@
+This repository is archived and is now being updated and maintained as part of the Nox framework: https://github.com/nox7/nox
+
 # PHP MVC Attribute Router for Apache
 Since the introduction of attribute decorators in PHP 8, it is now possible to create a routing system with simple method decorations. Further, you can do this in existing server setups that use Apache. It is also possible to do this in stand-alone PHP quite easily (such as Swoole).
 
